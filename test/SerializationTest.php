@@ -109,6 +109,14 @@ class SerializationTest extends DatabaseTest
 		$this->assert_not_null(json_decode(Book::find(1)->to_json())->book);
 	}
 
+	public function test_json_encode()
+	{
+		$book = Book::find(1);
+		$json = json_encode($book);
+
+		print_r($json);
+	}
+
 	public function test_to_xml_include()
 	{
 		$xml = Host::find(4)->to_xml(array('include' => 'events'));

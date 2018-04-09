@@ -71,7 +71,7 @@ namespace ActiveRecord;
  * @see Serialization
  * @see Validations
  */
-class Model
+class Model implements \JsonSerializable
 {
 	/**
 	 * An instance of {@link Errors} and will be instantiated once a write method is called.
@@ -1937,5 +1937,45 @@ class Model
 			throw $e;
 		}
 		return true;
+	}
+
+	function jsonSerialize()
+	{
+		$includes = $this->getIncludes($this);
+		$object = json_decode($this->to_json(array('include' => $includes)));
+		return $object;
+	}
+
+	private function getIncludes($object)
+	{
+		$includes = array();
+
+		foreach ($object->__relationships as $name => $value)
+		{
+			if ($value instanceof Model)
+			{
+				$relationshipIncludes = $this->getIncludes($value);
+				if (count($relationshipIncludes) == 0) {
+					$includes[] = $name;
+				} else {
+					$includes[$name] = array('include' => $relationshipIncludes);
+				}
+			}
+			elseif (is_array($value))
+			{
+				$relationshipIncludes = $this->getIncludes($value[0]);
+				if (count($relationshipIncludes) == 0) {
+					$includes[] = $name;
+				} else {
+					$includes[$name] = array('include' => $relationshipIncludes);
+				}
+			}
+			else
+			{
+				$includes[] = $name;
+			}
+		}
+
+		return $includes;
 	}
 }
