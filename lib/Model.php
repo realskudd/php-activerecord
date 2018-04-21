@@ -1978,4 +1978,9 @@ class Model implements \JsonSerializable
 
 		return $includes;
 	}
+
+	public function relationships()
+	{
+		return $this->__relationships;
+	}
 }
