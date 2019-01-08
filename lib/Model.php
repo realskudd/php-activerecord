@@ -1950,6 +1950,10 @@ class Model implements \JsonSerializable
 	{
 		$includes = array();
 
+		if (!is_array($object->__relationships)) {
+			return $includes;
+		}
+
 		foreach ($object->__relationships as $name => $value)
 		{
 			if ($value instanceof Model)
