@@ -1,3 +1,7 @@
+> [!WARNING]
+> This project is deprecated and is no longer maintained.
+> The upstream project may be a better choice if you intend to use this library.
+
 # PHP ActiveRecord - Version 1.0 #
 
 [![Build Status](https://travis-ci.org/jpfuentes2/php-activerecord.png?branch=master)](https://travis-ci.org/jpfuentes2/php-activerecord)
